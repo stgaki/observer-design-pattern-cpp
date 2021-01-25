@@ -14,8 +14,9 @@ int main (int argc, char ** argv) {
     
     //create weather station
 	WeatherStation weatherStation;
+    message("#Observers: ", weatherStation.getNumberOfObservers()); //should be 0
 
-    //generate random incoming weather data (normally should be taken from censors)
+    //generate incoming weather data (normally should be taken from censors)
     setRandomSeed();
     float temp, humid, pres;
     generateWeatherData(temp, humid, pres);
@@ -23,57 +24,41 @@ int main (int argc, char ** argv) {
     // inform weather station with the new weather data
     WeatherData data(temp, humid, pres); 
     weatherStation.setMeasurements(data);
-    message("Current Temperature", weatherStation.getWeatherData().getTemperature());
-    message("Current Humidity", weatherStation.getWeatherData().getHumidity());
-    message("Current Pressure", weatherStation.getWeatherData().getPressure());
-
-    message("#Observers: ", weatherStation.getNumberOfObservers());
   
     // add observers 
     CurrentWeatherReport displayWeather(weatherStation);
-    message("#Observers: ", weatherStation.getNumberOfObservers());
-    //WeatherForecastReport* forecast = new WeatherForecastReport(&weatherStation);
     WeatherForecastReport forecast(weatherStation);
-    message("#Observers: ", weatherStation.getNumberOfObservers());
     WeatherLogger logger(weatherStation, "weather.log");
-    message("#Observers: ", weatherStation.getNumberOfObservers());
+    message("#Observers: ", weatherStation.getNumberOfObservers()); //should be 3
 
     //generate new incoming weather data
-    const int nbOfMeasurements = 1; 
+    const int nbOfMeasurements = 5; // number of sets of data to generate
     int cnt = 0;
     while(cnt!=nbOfMeasurements) {
-            generateWeatherData(temp, humid, pres);
-            data.setWeatherData(temp,humid, pres);
-            weatherStation.setMeasurements(data);
-            cnt++;
+        generateWeatherData(temp, humid, pres);
+        data.setWeatherData(temp,humid, pres);
+        weatherStation.setMeasurements(data);
+        cnt++;
     }
 
     //remove an observer
-    //delete forecast;
     forecast.unregisterFromStation();
     message("Is forecast registered? ", weatherStation.isRegistered(&forecast));
+    message("#Observers: ", weatherStation.getNumberOfObservers()); //should be 2
 
     //generate new incoming weather data
     cnt = 0;
     while(cnt!=nbOfMeasurements) {
-            generateWeatherData(temp, humid, pres);
-            data.setWeatherData(temp,humid, pres);
-            weatherStation.setMeasurements(data);
-            cnt++;
+        generateWeatherData(temp, humid, pres);
+        data.setWeatherData(temp,humid, pres);
+        weatherStation.setMeasurements(data);
+        cnt++;
     }
 
     //re-add forecast observer
     forecast.registerToStation();
     message("Is forecast registered? ", weatherStation.isRegistered(&forecast));
-
-    //TODO add debugging methods e.g. that print the #ofObservers
-
-    //Observer Ideas:
-    //Logger that writes to file -> YES!
-    //Extreme Temperature Alarm -> YES!
-    //Maybe Forecast then reads from the Log file
-    //can write in binary or other format file
-    //better way to get a forecast? use some more advanced math?
+    message("#Observers: ", weatherStation.getNumberOfObservers()); //should be 3
 }
 
 #endif

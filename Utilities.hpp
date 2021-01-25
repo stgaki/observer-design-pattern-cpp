@@ -16,10 +16,6 @@ void setRandomSeed(){
 }
 
 float RandomFloat(float min, float max) {
-    /*const float range = max - min;
-    std::cout << "range = " << range << std::endl;
-    float random = range * ((((float) rand()) / (float) RAND_MAX)) + min ;
-    return random;*/
     return  (max - min) * ((((float) rand()) / (float) RAND_MAX)) + min;
 }
 

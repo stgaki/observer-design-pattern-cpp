@@ -15,12 +15,12 @@ int main (int argc, char ** argv) {
     
     //create weather station
 	WeatherStation weatherStation;
-    message("#Observers: ", weatherStation.getNumberOfObservers()); //should be 0
+    utils::message("#Observers: ", weatherStation.getNumberOfObservers()); //should be 0
 
     //generate incoming weather data (normally should be taken from censors)
-    setRandomSeed();
+    utils::setRandomSeed();
     float temp, humid, pres;
-    generateWeatherData(temp, humid, pres);
+    utils::generateWeatherData(temp, humid, pres);
   
     // inform weather station with the new weather data
     WeatherData data(temp, humid, pres); 
@@ -31,14 +31,14 @@ int main (int argc, char ** argv) {
     ExtremeTemperatureAlert temperatureAlarm(weatherStation);
     WeatherForecastReport forecast(weatherStation);
     WeatherLogger logger(weatherStation, "weather.log");
-    message("#Observers: ", weatherStation.getNumberOfObservers()); //should be 4
+    utils::message("#Observers: ", weatherStation.getNumberOfObservers()); //should be 4
 
     //generate new incoming weather data using forecast hint
-    message("Forecast data available? ", weatherStation.isRegistered(&forecast));
+    utils::message("Forecast data available? ", weatherStation.isRegistered(&forecast));
     const int nbOfMeasurements = 5; // number of sets of data to generate
     int cnt = 0;
     while(cnt!=nbOfMeasurements) {
-        generateSmartWeatherData(temp, humid, pres, forecast.isPressureDecreasing());
+        utils::generateSmartWeatherData(temp, humid, pres, forecast.isPressureDecreasing());
         data.setWeatherData(temp,humid, pres);
         weatherStation.setMeasurements(data);
         cnt++;
@@ -46,13 +46,13 @@ int main (int argc, char ** argv) {
 
     //remove forecast observer
     forecast.unregisterFromStation();
-    message("#Observers: ", weatherStation.getNumberOfObservers()); //should be 3
+    utils::message("#Observers: ", weatherStation.getNumberOfObservers()); //should be 3
 
     //generate new incoming weather data (no forecast hint available)
-    message("Forecast data available? ", weatherStation.isRegistered(&forecast));
+    utils::message("Forecast data available? ", weatherStation.isRegistered(&forecast));
     cnt = 0;
     while(cnt!=nbOfMeasurements) {
-        generateWeatherData(temp, humid, pres);
+        utils::generateWeatherData(temp, humid, pres);
         data.setWeatherData(temp,humid, pres);
         weatherStation.setMeasurements(data);
         cnt++;
@@ -60,8 +60,8 @@ int main (int argc, char ** argv) {
 
     //re-add forecast observer
     forecast.registerToStation();
-    message("#Observers: ", weatherStation.getNumberOfObservers()); //should be 4
-    message("Forecast data available? ", weatherStation.isRegistered(&forecast));
+    utils::message("#Observers: ", weatherStation.getNumberOfObservers()); //should be 4
+    utils::message("Forecast data available? ", weatherStation.isRegistered(&forecast));
 }
 
 #endif

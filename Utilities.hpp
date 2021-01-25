@@ -53,7 +53,7 @@ void generateSmartWeatherData(float& temp, float& humid, float& pres, bool isPre
 
 // print a simple message
 void message(const char * s) { std::cout << s << std::endl; }
-void message(const char * s, bool v) { std::cout << s << ( v ? "True" : "False" ) << std::endl; }
+void message(const char * s, bool v) { std::cout << s << ( v ? "YES" : "NO" ) << std::endl; }
 template<typename T>
 void message(const char * s, const T & v) { std::cout << s << ": " << v << std::endl; }
 

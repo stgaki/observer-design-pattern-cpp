@@ -7,6 +7,7 @@
 #include "Utilities.hpp"
 #include "WeatherStation.hpp"
 #include "CurrentWeatherReport.hpp"
+#include "ExtremeTemperatureAlert.hpp"
 #include "WeatherForecastReport.hpp"
 #include "WeatherLogger.hpp"
 
@@ -27,9 +28,10 @@ int main (int argc, char ** argv) {
   
     // add observers 
     CurrentWeatherReport displayWeather(weatherStation);
+    ExtremeTemperatureAlert temperatureAlarm(weatherStation);
     WeatherForecastReport forecast(weatherStation);
     WeatherLogger logger(weatherStation, "weather.log");
-    message("#Observers: ", weatherStation.getNumberOfObservers()); //should be 3
+    message("#Observers: ", weatherStation.getNumberOfObservers()); //should be 4
 
     //generate new incoming weather data using forecast hint
     message("Forecast data available? ", weatherStation.isRegistered(&forecast));
@@ -44,7 +46,7 @@ int main (int argc, char ** argv) {
 
     //remove forecast observer
     forecast.unregisterFromStation();
-    message("#Observers: ", weatherStation.getNumberOfObservers()); //should be 2
+    message("#Observers: ", weatherStation.getNumberOfObservers()); //should be 3
 
     //generate new incoming weather data (no forecast hint available)
     message("Forecast data available? ", weatherStation.isRegistered(&forecast));
@@ -58,8 +60,8 @@ int main (int argc, char ** argv) {
 
     //re-add forecast observer
     forecast.registerToStation();
-    message("Is forecast registered? ", weatherStation.isRegistered(&forecast));
-    message("#Observers: ", weatherStation.getNumberOfObservers()); //should be 3
+    message("#Observers: ", weatherStation.getNumberOfObservers()); //should be 4
+    message("Forecast data available? ", weatherStation.isRegistered(&forecast));
 }
 
 #endif

@@ -3,11 +3,6 @@
 
 #include "WeatherData.hpp"
 
-//TODO rename to WeatherStationObserverItf
-//maybe add a WeatherStationObserver class that keeps the WeatherStation* _weatherStation;
-// and  WeatherData _weatherData; and constructs them
-//then eg. currentWeatherReport can only implement update..
-// or WeatherStationObserverItf can have members.. can an interface have members? protected?
 class ObserverItf {
   
   public:

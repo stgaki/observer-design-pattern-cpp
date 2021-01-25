@@ -11,7 +11,7 @@ WeatherStation::~WeatherStation(){
 }
 
 void WeatherStation::registerObserver(ObserverItf* observer){
-  if(!isRegistered(observer)) _observers.push_front(observer);
+  if(!isRegistered(observer)) _observers.push_back(observer);
 }
 
 void WeatherStation::removeObserver(ObserverItf* observer){

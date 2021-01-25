@@ -31,22 +31,23 @@ int main (int argc, char ** argv) {
     WeatherLogger logger(weatherStation, "weather.log");
     message("#Observers: ", weatherStation.getNumberOfObservers()); //should be 3
 
-    //generate new incoming weather data
+    //generate new incoming weather data using forecast hint
+    message("Forecast data available? ", weatherStation.isRegistered(&forecast));
     const int nbOfMeasurements = 5; // number of sets of data to generate
     int cnt = 0;
     while(cnt!=nbOfMeasurements) {
-        generateWeatherData(temp, humid, pres);
+        generateSmartWeatherData(temp, humid, pres, forecast.isPressureDecreasing());
         data.setWeatherData(temp,humid, pres);
         weatherStation.setMeasurements(data);
         cnt++;
     }
 
-    //remove an observer
+    //remove forecast observer
     forecast.unregisterFromStation();
-    message("Is forecast registered? ", weatherStation.isRegistered(&forecast));
     message("#Observers: ", weatherStation.getNumberOfObservers()); //should be 2
 
-    //generate new incoming weather data
+    //generate new incoming weather data (no forecast hint available)
+    message("Forecast data available? ", weatherStation.isRegistered(&forecast));
     cnt = 0;
     while(cnt!=nbOfMeasurements) {
         generateWeatherData(temp, humid, pres);

@@ -8,6 +8,8 @@
 
 #define MIN_TEMP (-20)
 #define MAX_TEMP (+45)
+#define MIN_HUMID 0
+#define MAX_HUMID 100
 #define MIN_PRES (25.9)
 #define MAX_PRES (32.01)
 
@@ -23,8 +25,8 @@ float generateRandTemperature(int min=MIN_TEMP, int max=MAX_TEMP){
     return trunc(RandomFloat(0, max+abs(min))-abs(min));
 }
 
-float generateRandHumidity(){
-    return trunc(RandomFloat(0,100));
+float generateRandHumidity(int min=MIN_HUMID, int max=MAX_HUMID){
+    return trunc(RandomFloat(min, max));
 }
 
 float generateRandPressure(){
@@ -38,10 +40,15 @@ void generateWeatherData(float& temp, float& humid, float& pres){
 }
 
 void generateSmartWeatherData(float& temp, float& humid, float& pres, bool isPressureDecreasing){
-    //TODO
-    //input old data //output new data
-    //bool true: reduce temperature
-    //else: increase temperature
+    if(isPressureDecreasing) { 
+        temp = generateRandTemperature(temp-10, temp); // temperature should be decreasing
+        humid = generateRandHumidity(humid, MAX_HUMID); // humidity should be increasing
+    }
+    else {
+        temp = generateRandTemperature(temp, temp+10); // temperature should be increasing
+        humid = generateRandHumidity(MIN_HUMID, humid); // humidity should be decreasing 
+    }
+    pres = generateRandPressure();
 }
 
 // print a simple message

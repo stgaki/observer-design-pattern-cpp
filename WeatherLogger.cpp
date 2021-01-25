@@ -29,9 +29,7 @@ void WeatherLogger::unregisterFromStation(){
 void WeatherLogger::logToFile(WeatherData data) const{
     std::ofstream outputFile;
     outputFile.open(_outputFilename.c_str(), std::ios_base::app);
-    if (!outputFile.good()) {
-        std::cout << "Unable to open output file: " << _outputFilename << std::endl;
-	}
+    if (!outputFile.good()) std::cout << "Unable to open output file: " << _outputFilename << std::endl;
     outputFile << data.getTemperature() << " " << data.getHumidity() << " " << data.getPressure() << std::endl;
     outputFile.close();
 }

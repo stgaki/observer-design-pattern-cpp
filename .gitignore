@@ -1,0 +1,14 @@
+# Compiled source #
+###################
+*.exe
+*.o
+
+
+# Logs  #
+#########
+*.log
+
+# VSCODE generated files #
+##########################
+.vscode/*
+

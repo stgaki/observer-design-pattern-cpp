@@ -19,7 +19,7 @@ void WeatherStation::removeObserver(ObserverItf* observer){
 }
 
 void WeatherStation::notifyObservers(){
-  for(std::list<ObserverItf*>::iterator obsIt = _observers.begin(), end = _observers.end(); obsIt!=end; ++obsIt){
+  for(auto obsIt = _observers.begin(), end = _observers.end(); obsIt!=end; ++obsIt){
     (*obsIt)->update(_weatherData);
   }
 }

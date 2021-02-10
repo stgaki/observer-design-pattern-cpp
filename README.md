@@ -20,7 +20,7 @@ So new Observers like WeatherForecastReport or HighHumidityAlert can easily be a
 
 ## Input/Output
 
-###Input
+### Input
 
 Incoming Weather Data are needed to run the project.
 
@@ -30,16 +30,16 @@ For that a ***weather data generator*** is provided that randomly generates weat
 
 The randomizer can be found in Utilities class. Here is an example:
 
-'''
+```
 utils::generateWeatherData(temp, humid, pres);
-'''
+```
 
-# Output 
+### Output 
 
 Depending on the kind of Observers that have been registered to Weather Station Subject and the incoming weather data, a current and/or forecast weather report will be displayed, an alarm if current temperature is too low or too high and incoming weather data will be logged in "weather.log" file.
 
 Output example:
-'''
+```
 Current Conditions: 38 degrees Celcius, 71% humidity, 28.5257 atm barometric pressure
 
 EXTREME TEMPERATURE ALARM: Beware for extreme heat!
@@ -49,7 +49,7 @@ Forecast: Improving weather on the way!
 Current Conditions: 29 degrees Celcius, 42% humidity, 30.9482 atm barometric pressure
 
 Forecast: Improving weather on the way!
-'''
+```
 
 ## UML Class Diagram
 The class diagram of the solution design can be found in "class diagram solution design.PNG".
